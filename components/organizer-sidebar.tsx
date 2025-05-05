@@ -23,37 +23,40 @@ export function OrganizerSidebar() {
   return (
     <div
       className={cn(
-        "bg-card h-screen border-r flex flex-col transition-all duration-300",
-        collapsed ? "w-[70px]" : "w-[240px]",
+        "bg-card h-screen border-r flex flex-col transition-width duration-300 overflow-hidden",
+        collapsed ? "w-16" : "w-60"
       )}
     >
-      <div className="flex items-center justify-between p-4 border-b">
+      <div className="flex items-center justify-between px-4 py-2 border-b">
         {!collapsed && <h2 className="font-bold text-lg">Organizer Panel</h2>}
         <Button
           variant="ghost"
           size="icon"
           onClick={() => setCollapsed(!collapsed)}
-          className={cn("ml-auto", collapsed && "mx-auto")}
+          className="p-0"
         >
           {collapsed ? <Menu className="h-5 w-5" /> : <ChevronLeft className="h-5 w-5" />}
         </Button>
       </div>
 
-      <nav className="flex-1 p-2">
+      <nav className="flex-1 px-2 py-4">
         <ul className="space-y-1">
           {navigation.map((item) => {
-            const isActive = pathname === item.href || pathname?.startsWith(`${item.href}/`)
-            const ItemIcon = item.icon
+            const active = pathname === item.href || pathname.startsWith(item.href + "/")
+            const Icon = item.icon
 
             return (
               <li key={item.name}>
-                <Link href={item.href}>
+                <Link href={item.href} passHref>
                   <Button
-                    variant={isActive ? "secondary" : "ghost"}
-                    className={cn("w-full justify-start", collapsed && "justify-center px-2")}
+                    variant={active ? "secondary" : "ghost"}
+                    className={cn(
+                      "w-full flex items-center",
+                      collapsed ? "justify-center" : "justify-start space-x-2 px-4"
+                    )}
                   >
-                    <ItemIcon className={cn("h-5 w-5", collapsed ? "mr-0" : "mr-3")} />
-                    {!collapsed && <span>{item.name}</span>}
+                    <Icon className="h-5 w-5" />
+                    {!collapsed && <span className="truncate">{item.name}</span>}
                   </Button>
                 </Link>
               </li>
