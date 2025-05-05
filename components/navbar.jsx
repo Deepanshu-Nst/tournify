@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Trophy, Menu, Calendar, Home, Users, LogIn, User } from "lucide-react"
-import { ModeToggle } from "@/components/mode-toggle"
+// import { ModeToggle } from "@/components/mode-toggle"
 import { UserButton } from "@/components/user-button"
 import { useAuth } from "@/lib/auth"
 import { useRouter } from "next/navigation"
@@ -86,7 +86,7 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-4">
-          <ModeToggle />
+          {/* <ModeToggle /> */}
           {user ? (
             <>
               <Link href="/organizer/dashboard">
@@ -101,17 +101,11 @@ export function Navbar() {
                     <span>My Tournaments</span>
                   </a>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <a href="/profile" className="cursor-pointer flex w-full items-center">
-                    <User className="mr-2 h-4 w-4" />
-                    <span>Profile</span>
-                  </a>
-                </DropdownMenuItem>
               </UserButton>
             </>
           ) : (
             <Button variant="default" size="sm" onClick={() => router.push("/login")}>
-              <LogIn className="mr-2 h-4 w-4" />
+              {/* <LogIn className="mr-2 h-4 w-4" /> */}
               Sign In
             </Button>
           )}
