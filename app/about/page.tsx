@@ -122,7 +122,7 @@ export default function AboutPage() {
               </p>
             </div>
             <div className="mx-auto grid gap-8 pt-12 md:grid-cols-2 lg:grid-cols-3">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
+              {[1, 2, 3].map((i) => (
                 <div key={i} className="flex flex-col items-center space-y-4">
                   <div className="overflow-hidden rounded-full">
                     <Image
@@ -140,38 +140,14 @@ export default function AboutPage() {
                         [
                           "CEO & Founder",
                           "CTO",
-                          "Head of Design",
                           "Lead Developer",
                           "Community Manager",
-                          "Support Specialist",
                         ][i - 1]
                       }
                     </p>
                   </div>
                 </div>
               ))}
-            </div>
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="border-t bg-muted/40 py-12 md:py-24">
-          <div className="container px-4 md:px-6">
-            <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Ready to Get Started?</h2>
-              <p className="max-w-[85%] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Join thousands of organizers and participants already using Tournify.
-              </p>
-              <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                <Link href="/signup">
-                  <Button size="lg">Sign Up Now</Button>
-                </Link>
-                <Link href="/contact">
-                  <Button size="lg" variant="outline">
-                    Contact Us
-                  </Button>
-                </Link>
-              </div>
             </div>
           </div>
         </section>
