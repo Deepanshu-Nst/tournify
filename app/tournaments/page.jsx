@@ -97,7 +97,7 @@ export default function TournamentsPage() {
             fill
             className="object-cover"
           />
-          <Badge className="absolute top-2 right-2">{tournament.registrationType || "Free"}</Badge>
+          {/* <Badge className="absolute top-2 right-2">{tournament.registrationType || "Free"}</Badge> */}
         </div>
         <CardContent className="p-4">
           <h3 className="font-bold text-xl mb-2">{tournament.title}</h3>
@@ -116,7 +116,9 @@ export default function TournamentsPage() {
           </div>
         </CardContent>
         <CardFooter className="p-4 pt-0 flex items-center justify-between">
-          <Button variant="default" size="sm" className="w-full transition-all hover:bg-primary/90">
+          <Button variant="default" size="sm"
+          //  className="w-full transition-all hover:bg-primary/90"
+           >
             {tournament.status === "completed" ? "View Results" : "View Details"}
           </Button>
         </CardFooter>
@@ -157,7 +159,7 @@ export default function TournamentsPage() {
                 <h1 className="text-3xl font-bold tracking-tight">Tournaments</h1>
                 <p className="mt-1 text-muted-foreground">Find and join tournaments from around the world</p>
               </div>
-              <div className="flex items-center gap-2 animate-slide-up" style={{ animationDelay: "0.2s" }}>
+              {/* <div className="flex items-center gap-2 animate-slide-up" style={{ animationDelay: "0.2s" }}>
                 <div className="relative">
                   <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                   <Input
@@ -168,7 +170,7 @@ export default function TournamentsPage() {
                     onChange={handleSearch}
                   />
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </section>
