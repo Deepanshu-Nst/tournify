@@ -45,14 +45,14 @@ export default function HomePage() {
                 style={{ animationDelay: "0.6s" }}
               >
                 <Link href="/tournaments">
-                  <Button size="lg" className="gap-1.5 transition-all hover:bg-primary/90 hover:translate-y-[-2px]">
+                  <Button size="sm" className="gap-1.5 transition-all hover:bg-primary/90 hover:translate-y-[-2px]">
                     Explore Tournaments
-                    <ArrowRight className="h-4 w-4" />
+                    {/* <ArrowRight className="h-4 w-4" /> */}
                   </Button>
                 </Link>
                 <Link href="/organizer/dashboard">
                   <Button
-                    size="lg"
+                    size="sm"
                     variant="outline"
                     className="transition-all hover:bg-secondary/80 hover:translate-y-[-2px]"
                   >
@@ -141,34 +141,6 @@ export default function HomePage() {
                 <p className="text-muted-foreground">{feature.desc}</p>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="border-t bg-muted/40 py-12 md:py-24">
-        <div className="container px-4 md:px-6">
-          <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center animate-fade-in">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Ready to Get Started?</h2>
-            <p className="max-w-[85%] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Join thousands of organizers and participants already using Tournify.
-            </p>
-            <div className="flex flex-col gap-2 min-[400px]:flex-row">
-              <Link href="/signup">
-                <Button size="lg" className="transition-all hover:bg-primary/90 hover:translate-y-[-2px]">
-                  Sign Up Now
-                </Button>
-              </Link>
-              <Link href="/about">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="transition-all hover:bg-secondary/80 hover:translate-y-[-2px]"
-                >
-                  Learn More
-                </Button>
-              </Link>
-            </div>
           </div>
         </div>
       </section>
