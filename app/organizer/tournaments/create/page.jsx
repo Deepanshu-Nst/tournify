@@ -380,7 +380,7 @@ export default function CreateTournamentPage() {
                     </>
                   ) : (
                     <>
-                      <Save className="h-4 w-4" />
+                      {/* <Save className="h-2 w-4" /> */}
                       Create Tournament
                     </>
                   )}
