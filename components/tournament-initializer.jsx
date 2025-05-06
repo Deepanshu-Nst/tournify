@@ -23,8 +23,8 @@ const DEFAULT_TOURNAMENTS = [
     contact: "support@tournify.com",
   },
   {
-    id: "fvvc",
-    title: "fvvc",
+    id: "valo-championship",
+    title: "Valo Championship",
     game: "Valorant",
     description: "Competitive Valorant tournament for all skill levels.",
     startDate: "2025-05-14",
