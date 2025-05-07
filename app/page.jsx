@@ -16,9 +16,9 @@ export default function HomePage() {
       <section className="relative pb-20 pt-12 md:pt-24">
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
-          <Image
-            src="https://files.oaiusercontent.com/file-6gg5mo3zJgMdWWqqKG4rXr?se=2025-05-07T11%3A14%3A02Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D299%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3D9470c89f-9d9e-4ad0-8609-9befa504c2a1.png&sig=qAC2b6VLiEkukBBDBeQLmUNeD0aquFeC8UyIkBY%2BpNg%3D"
-            alt="Tournament background"
+          <Image 
+            src="/Background.png"
+            alt="tournify"
             fill
             className="object-cover brightness-50"
             priority
