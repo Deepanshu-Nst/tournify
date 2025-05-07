@@ -159,7 +159,10 @@ export default function TournamentsPage() {
                 <h1 className="text-3xl font-bold tracking-tight">Tournaments</h1>
                 <p className="mt-1 text-muted-foreground">Find and join tournaments from around the world</p>
               </div>
-              {/* <div className="flex items-center gap-2 animate-slide-up" style={{ animationDelay: "0.2s" }}>
+
+              {/* // search bar */}
+              
+              <div className="flex items-center gap-2 animate-slide-up" style={{ animationDelay: "0.2s" }}>
                 <div className="relative">
                   <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                   <Input
@@ -170,7 +173,7 @@ export default function TournamentsPage() {
                     onChange={handleSearch}
                   />
                 </div>
-              </div> */}
+              </div>
             </div>
           </div>
         </section>
