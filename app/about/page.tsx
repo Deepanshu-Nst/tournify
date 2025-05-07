@@ -32,7 +32,7 @@ export default function AboutPage() {
               </div>
               <div className="mx-auto aspect-square overflow-hidden rounded-xl object-cover">
                 <Image
-                  src="/placeholder.svg?height=600&width=600"
+                  src="https://sdmntprwestus.oaiusercontent.com/files/00000000-3644-6230-a897-956a7d4c0cd3/raw?se=2025-05-07T12%3A00%3A45Z&sp=r&sv=2024-08-04&sr=b&scid=4b2704b1-5479-5e9c-b271-15707b32c631&skoid=4ae7b564-2531-470e-8ddb-6913f4bee2ee&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-07T05%3A00%3A07Z&ske=2025-05-08T05%3A00%3A07Z&sks=b&skv=2024-08-04&sig=p2LvA4kiYZZKf8UtvDlnkC2oF8iGbnTn2qdBE4lir%2Bo%3D"
                   alt="The Tournify Team"
                   width={600}
                   height={600}
