@@ -32,7 +32,7 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/pricing" className="text-sm hover:text-primary transition-colors">
+                  <Link href="#" className="text-sm hover:text-primary transition-colors">
                     Pricing
                   </Link>
                 </li>
@@ -47,17 +47,17 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/blog" className="text-sm hover:text-primary transition-colors">
+                  <Link href="#" className="text-sm hover:text-primary transition-colors">
                     Blog
                   </Link>
                 </li>
                 <li>
-                  <Link href="/careers" className="text-sm hover:text-primary transition-colors">
+                  <Link href="#" className="text-sm hover:text-primary transition-colors">
                     Careers
                   </Link>
                 </li>
                 <li>
-                  <Link href="/contact" className="text-sm hover:text-primary transition-colors">
+                  <Link href="#" className="text-sm hover:text-primary transition-colors">
                     Contact
                   </Link>
                 </li>
@@ -67,17 +67,17 @@ export default function Footer() {
               <h3 className="text-sm font-medium uppercase tracking-wide">Legal</h3>
               <ul className="space-y-2">
                 <li>
-                  <Link href="/terms" className="text-sm hover:text-primary transition-colors">
+                  <Link href="#" className="text-sm hover:text-primary transition-colors">
                     Terms of Service
                   </Link>
                 </li>
                 <li>
-                  <Link href="/privacy" className="text-sm hover:text-primary transition-colors">
+                  <Link href="#" className="text-sm hover:text-primary transition-colors">
                     Privacy Policy
                   </Link>
                 </li>
                 <li>
-                  <Link href="/cookies" className="text-sm hover:text-primary transition-colors">
+                  <Link href="#" className="text-sm hover:text-primary transition-colors">
                     Cookie Policy
                   </Link>
                 </li>
@@ -90,25 +90,25 @@ export default function Footer() {
             <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} Tournify. All rights reserved.</p>
             <div className="flex items-center gap-4">
               <Link
-                href="https://twitter.com"
+                href="https://twitter.com/login"
                 className="text-sm text-muted-foreground hover:text-primary transition-colors"
               >
                 Twitter
               </Link>
               <Link
-                href="https://facebook.com"
+                href="https://facebook.com/login"
                 className="text-sm text-muted-foreground hover:text-primary transition-colors"
               >
                 Facebook
               </Link>
               <Link
-                href="https://instagram.com"
+                href="https://instagram.com/login"
                 className="text-sm text-muted-foreground hover:text-primary transition-colors"
               >
                 Instagram
               </Link>
               <Link
-                href="https://discord.com"
+                href="https://discord.com/login"
                 className="text-sm text-muted-foreground hover:text-primary transition-colors"
               >
                 Discord
