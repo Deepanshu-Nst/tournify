@@ -21,7 +21,7 @@ export function Navbar() {
   const navigation = [
     { name: "Home", href: "/", icon: Home },
     { name: "Tournaments", href: "/tournaments", icon: Trophy },
-    { name: "Events", href: "/events", icon: Calendar },
+    // { name: "Events", href: "/events", icon: Calendar },
     { name: "About", href: "/about", icon: Users },
   ]
 

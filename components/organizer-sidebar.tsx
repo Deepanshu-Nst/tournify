@@ -13,11 +13,11 @@ export function OrganizerSidebar() {
 
   const navigation = [
     { name: "Dashboard", href: "/organizer/dashboard", icon: LayoutDashboard },
-    { name: "Tournaments", href: "/organizer/tournaments", icon: Trophy },
-    { name: "Participants", href: "/organizer/participants", icon: Users },
-    { name: "Announcements", href: "/organizer/announcements", icon: FileText },
-    { name: "Queries", href: "/organizer/queries", icon: MessageSquare },
-    { name: "Settings", href: "/organizer/settings", icon: Settings },
+    { name: "Tournaments", href: "#", icon: Trophy },
+    { name: "Participants", href: "#", icon: Users },
+    { name: "Announcements", href: "#", icon: FileText },
+    { name: "Queries", href: "#", icon: MessageSquare },
+    { name: "Settings", href: "#", icon: Settings },
   ]
 
   return (
