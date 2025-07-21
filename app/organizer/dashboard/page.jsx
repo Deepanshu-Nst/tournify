@@ -142,7 +142,7 @@ export default function OrganizerDashboardPage() {
         <div className="flex">
           <OrganizerSidebar />
 
-          <main className="flex-1 p-6">
+          <main className="flex-1 p-6 mx-auto w-full max-w-6xl">
             <div className="flex items-center justify-between mb-6">
               <h1 className="text-3xl font-bold">Organizer Dashboard</h1>
               <Link href="/organizer/tournaments/create">
@@ -153,7 +153,7 @@ export default function OrganizerDashboardPage() {
               </Link>
             </div>
 
-            <div className="grid gap-6 md:grid-cols-3 mb-6">
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-6">
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
                   <CardTitle className="text-sm font-medium">Total Tournaments</CardTitle>

@@ -165,7 +165,7 @@ export default function CreateTournamentPage() {
         <div className="flex">
           <OrganizerSidebar />
 
-          <main className="flex-1 p-6">
+          <main className="flex-1 p-6 mx-auto w-full max-w-3xl">
             <div className="flex items-center justify-between mb-6">
               <h1 className="text-3xl font-bold">Create Tournament</h1>
             </div>
@@ -177,7 +177,7 @@ export default function CreateTournamentPage() {
                   <CardDescription>Provide the basic details about your tournament.</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="grid gap-4 md:grid-cols-2">
+                  <div className="grid gap-4 sm:grid-cols-2">
                     <div className="space-y-2">
                       <Label htmlFor="title">
                         Tournament Name <span className="text-red-500">*</span>
@@ -220,7 +220,7 @@ export default function CreateTournamentPage() {
                     <ImageUpload onImageChange={handleImageChange} />
                   </div>
 
-                  <div className="grid gap-4 md:grid-cols-2">
+                  <div className="grid gap-4 sm:grid-cols-2">
                     <div className="space-y-2">
                       <Label>
                         Start Date <span className="text-red-500">*</span>
@@ -276,7 +276,7 @@ export default function CreateTournamentPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="grid gap-4 md:grid-cols-2">
+                  <div className="grid gap-4 sm:grid-cols-2">
                     <div className="space-y-2">
                       <Label htmlFor="format">Tournament Format</Label>
                       <Select onValueChange={(value) => handleSelectChange("format", value)} value={formData.format}>
@@ -311,7 +311,7 @@ export default function CreateTournamentPage() {
                     </div>
                   </div>
 
-                  <div className="grid gap-4 md:grid-cols-2">
+                  <div className="grid gap-4 sm:grid-cols-2">
                     <div className="space-y-2">
                       <Label htmlFor="prizePool">Prize Pool</Label>
                       <Input
@@ -341,7 +341,7 @@ export default function CreateTournamentPage() {
                     </div>
                   </div>
 
-                  <div className="grid gap-4 md:grid-cols-2">
+                  <div className="grid gap-4 sm:grid-cols-2">
                     <div className="space-y-2">
                       <Label htmlFor="venue">Venue</Label>
                       <Input
