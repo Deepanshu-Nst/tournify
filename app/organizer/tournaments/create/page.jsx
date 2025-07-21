@@ -111,7 +111,7 @@ export default function CreateTournamentPage() {
       // Upload banner image if provided
       if (bannerImage) {
         try {
-          const imageUrl = await uploadTournamentImage(bannerImage, tournament.id)
+          const imageUrl = await uploadTournamentImage(bannerImage)
 
           // Update tournament with image URL
           await updateTournament(tournament.id, { image: imageUrl })
