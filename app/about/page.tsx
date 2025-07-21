@@ -32,7 +32,7 @@ export default function AboutPage() {
               </div>
               <div className="mx-auto aspect-square overflow-hidden rounded-xl object-cover">
                 <Image
-                  src="https://sdmntprwestus.oaiusercontent.com/files/00000000-3644-6230-a897-956a7d4c0cd3/raw?se=2025-05-07T12%3A00%3A45Z&sp=r&sv=2024-08-04&sr=b&scid=4b2704b1-5479-5e9c-b271-15707b32c631&skoid=4ae7b564-2531-470e-8ddb-6913f4bee2ee&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-07T05%3A00%3A07Z&ske=2025-05-08T05%3A00%3A07Z&sks=b&skv=2024-08-04&sig=p2LvA4kiYZZKf8UtvDlnkC2oF8iGbnTn2qdBE4lir%2Bo%3D"
+                  src="https://sdmntprwestus3.oaiusercontent.com/files/00000000-2f58-61fd-a6a7-6a2f93060e7f/raw?se=2025-07-21T14%3A31%3A16Z&sp=r&sv=2024-08-04&sr=b&scid=6e4632ce-99b7-5750-9ec5-5b6a2b86e9ad&skoid=24a7dec3-38fc-4904-b888-8abe0855c442&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-07-21T00%3A22%3A31Z&ske=2025-07-22T00%3A22%3A31Z&sks=b&skv=2024-08-04&sig=gTam1uY5hbrycBEVCZZRmBEfBCTSbpH0V7wW6q%2BD2Ts%3D"
                   alt="The Tournify Team"
                   width={600}
                   height={600}
