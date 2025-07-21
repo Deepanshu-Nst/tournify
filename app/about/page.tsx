@@ -113,7 +113,7 @@ export default function AboutPage() {
         </section>
 
         {/* Team Section */}
-        <section className="py-12 md:py-24">
+        {/* <section className="py-12 md:py-24">
           <div className="container px-4 md:px-6">
             <div className="mx-auto grid max-w-[58rem] gap-6 text-center">
               <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">Our Team</h2>
@@ -150,7 +150,8 @@ export default function AboutPage() {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
+
       </main>
 
       <Footer />
