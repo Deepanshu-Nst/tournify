@@ -32,7 +32,7 @@ export default function AboutPage() {
               </div>
               <div className="mx-auto aspect-square overflow-hidden rounded-xl object-cover">
                 <Image
-                  src="public\tounify logo.png"
+                  src="https://www.imghippo.com/i/pV8928mCU.png"
                   alt="The Tournify Team"
                   width={600}
                   height={600}
