@@ -8,6 +8,10 @@ const nextConfig = {
   },
   images: {
     unoptimized: true,
+    domains: [
+      'www.hollywoodreporter.com',
+      'media.wired.com'
+    ]
   },
 }
 
