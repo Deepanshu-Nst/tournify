@@ -32,7 +32,7 @@ export default function AboutPage() {
               </div>
               <div className="mx-auto aspect-square overflow-hidden rounded-xl object-cover">
                 <Image
-                  src="https://sdmntprwestus3.oaiusercontent.com/files/00000000-2f58-61fd-a6a7-6a2f93060e7f/raw?se=2025-07-21T14%3A31%3A16Z&sp=r&sv=2024-08-04&sr=b&scid=6e4632ce-99b7-5750-9ec5-5b6a2b86e9ad&skoid=24a7dec3-38fc-4904-b888-8abe0855c442&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-07-21T00%3A22%3A31Z&ske=2025-07-22T00%3A22%3A31Z&sks=b&skv=2024-08-04&sig=gTam1uY5hbrycBEVCZZRmBEfBCTSbpH0V7wW6q%2BD2Ts%3D"
+                  src="public\tounify logo.png"
                   alt="The Tournify Team"
                   width={600}
                   height={600}
@@ -113,44 +113,7 @@ export default function AboutPage() {
         </section>
 
         {/* Team Section */}
-        {/* <section className="py-12 md:py-24">
-          <div className="container px-4 md:px-6">
-            <div className="mx-auto grid max-w-[58rem] gap-6 text-center">
-              <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">Our Team</h2>
-              <p className="text-muted-foreground md:text-xl/relaxed">
-                Meet the people behind Tournify who are passionate about esports and sports tournaments.
-              </p>
-            </div>
-            <div className="mx-auto grid gap-8 pt-12 md:grid-cols-2 lg:grid-cols-3">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="flex flex-col items-center space-y-4">
-                  <div className="overflow-hidden rounded-full">
-                    <Image
-                      src={`/placeholder.svg?height=200&width=200&text=Team+Member+${i}`}
-                      alt={`Team Member ${i}`}
-                      width={100}
-                      height={100}
-                      className="aspect-square object-cover"
-                    />
-                  </div>
-                  <div className="space-y-1 text-center">
-                    <h3 className="font-bold">Team Member {i}</h3>
-                    <p className="text-sm text-muted-foreground">
-                      {
-                        [
-                          "CEO & Founder",
-                          "CTO",
-                          "Lead Developer",
-                          "Community Manager",
-                        ][i - 1]
-                      }
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section> */}
+ 
 
       </main>
 
