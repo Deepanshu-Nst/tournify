@@ -10,7 +10,9 @@ const nextConfig = {
     unoptimized: true,
     domains: [
       'www.hollywoodreporter.com',
-      'media.wired.com'
+      'media.wired.com',
+      'i0.wp.com',
+      'shared.fastly.steamstatic.com'
     ]
   },
 }
