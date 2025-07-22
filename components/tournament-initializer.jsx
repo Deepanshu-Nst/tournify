@@ -16,7 +16,7 @@ const DEFAULT_TOURNAMENTS = [
     registeredTeams: 12,
     status: "upcoming",
     registrationType: "Free",
-    image: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.hollywoodreporter.com%2Fbusiness%2Fdigital%2Ftencent-games-partners-with-l-a-production-company-for-pubg-mobile-cross-promotional-business-4151103%2F&psig=AOvVaw2KXulfUj0u7ZISRcc2OcXI&ust=1753196444206000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCICez-ybzo4DFQAAAAAdAAAAABAE",
+    image: "https://www.hollywoodreporter.com/wp-content/uploads/2019/10/pubg_mobile.jpg?w=1296&h=730&crop=1",
     rules: "Standard PUBG Mobile tournament rules apply.",
     prizes: "1st Place: $5000, 2nd Place: $2500, 3rd Place: $1000",
     organizer: "Tournify Official",
