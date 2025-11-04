@@ -47,7 +47,7 @@ export default function OrganizerDashboardPage() {
     const fetchDashboardData = async () => {
       try {
         // Get organizer tournaments
-        const tournaments = await getOrganizerTournaments(user.uid)
+        const tournaments = await getOrganizerTournaments(user.id)
 
         // Calculate stats
         const totalTournaments = tournaments.length

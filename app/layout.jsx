@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 
 import { Toaster } from "@/components/ui/toaster"
 import { AuthProvider } from "@/lib/auth"
+import { NextAuthProvider } from "@/lib/next-auth-provider"
 import { NetworkStatus } from "@/components/network-status"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -18,13 +19,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <AuthProvider>
-          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-            {children}
-            <NetworkStatus />
-            <Toaster />
-          </ThemeProvider>
-        </AuthProvider>
+        <NextAuthProvider>
+          <AuthProvider>
+            <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+              {children}
+              <NetworkStatus />
+              <Toaster />
+            </ThemeProvider>
+          </AuthProvider>
+        </NextAuthProvider>
       </body>
     </html>
   )

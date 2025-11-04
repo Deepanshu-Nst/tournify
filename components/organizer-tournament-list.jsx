@@ -34,7 +34,7 @@ export function OrganizerTournamentList() {
       if (!user) return
 
       try {
-        const data = await getOrganizerTournaments(user.uid)
+        const data = await getOrganizerTournaments(user.id)
         setTournaments(data)
       } catch (error) {
         console.error("Error fetching tournaments:", error)
@@ -127,7 +127,9 @@ export function OrganizerTournamentList() {
               </div>
             ) : (
               <div className="grid gap-6">
-                {tournaments.map((tournament) => (
+                {tournaments.map((tournament) => {
+                  const isOwner = user && tournament.organizerId === user.id
+                  return (
                   <div
                     key={tournament.id}
                     className="flex items-center justify-between border-b pb-4 last:border-0 last:pb-0"
@@ -164,19 +166,23 @@ export function OrganizerTournamentList() {
                           View
                         </Button>
                       </Link>
-                      <Link href={`/organizer/tournaments/${tournament.id}/edit`}>
-                        <Button size="sm" variant="outline">
-                          <Edit className="mr-1 h-4 w-4" />
-                          Edit
-                        </Button>
-                      </Link>
-                      <Button size="sm" variant="destructive" onClick={() => handleDeleteClick(tournament)}>
-                        <Trash className="mr-1 h-4 w-4" />
-                        Delete
-                      </Button>
+                      {isOwner && (
+                        <>
+                          <Link href={`/organizer/tournaments/${tournament.id}/edit`}>
+                            <Button size="sm" variant="outline">
+                              <Edit className="mr-1 h-4 w-4" />
+                              Edit
+                            </Button>
+                          </Link>
+                          <Button size="sm" variant="destructive" onClick={() => handleDeleteClick(tournament)}>
+                            <Trash className="mr-1 h-4 w-4" />
+                            Delete
+                          </Button>
+                        </>
+                      )}
                     </div>
                   </div>
-                ))}
+                )})}
               </div>
             )}
           </div>

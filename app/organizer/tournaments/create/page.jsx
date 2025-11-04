@@ -101,12 +101,12 @@ export default function CreateTournamentPage() {
         startDate: formattedStartDate,
         endDate: formattedEndDate,
         totalSlots: Number.parseInt(formData.totalSlots),
-        organizerName: user.displayName || user.email.split("@")[0],
+        organizerName: user.name || user.email.split("@")[0],
         image: null, // Will update after upload
       }
 
       // Create tournament
-      const tournament = await createTournament(tournamentData, user.uid)
+      const tournament = await createTournament(tournamentData, user.id)
 
       // Upload banner image if provided
       if (bannerImage) {

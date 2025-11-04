@@ -1,14 +1,46 @@
 import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
+import CredentialsProvider from "next-auth/providers/credentials"
+import { PrismaAdapter } from "@auth/prisma-adapter"
+import prisma from "@/lib/prisma"
+import bcrypt from "bcryptjs"
 
 // Make sure we're using a proper configuration
-export const authOptions = {
-  providers: [
+const providers = [
+  CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        const { email, password } = credentials ?? {}
+        if (!email || !password) return null
+
+        const user = await prisma.user.findUnique({ where: { email } })
+        if (!user || !user.passwordHash) return null
+
+        const valid = await bcrypt.compare(password, user.passwordHash)
+        if (!valid) return null
+
+        return { id: user.id, name: user.name, email: user.email, image: user.image }
+      },
+  }),
+]
+
+if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+  providers.push(
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
-  ],
+  )
+}
+
+export const authOptions = {
+  adapter: PrismaAdapter(prisma),
+  session: { strategy: "jwt" },
+  providers,
   callbacks: {
     async session({ session, token }) {
       if (session?.user) {
@@ -27,33 +59,10 @@ export const authOptions = {
     signIn: "/login",
     error: "/login",
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  // Use a stable dev fallback to avoid JWT decryption errors during local setup
+  secret: process.env.NEXTAUTH_SECRET || (process.env.NODE_ENV !== "production" ? "dev-secret-please-change" : undefined),
 }
 
-// Create the handler with proper error handling
+// App Router: export the handler directly so NextAuth receives (req, context)
 const handler = NextAuth(authOptions)
-
-// Export the handler with proper error handling
-export async function GET(request) {
-  try {
-    return await handler(request)
-  } catch (error) {
-    console.error("NextAuth GET Error:", error)
-    return new Response(JSON.stringify({ error: "Internal NextAuth error" }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    })
-  }
-}
-
-export async function POST(request) {
-  try {
-    return await handler(request)
-  } catch (error) {
-    console.error("NextAuth POST Error:", error)
-    return new Response(JSON.stringify({ error: "Internal NextAuth error" }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    })
-  }
-}
+export { handler as GET, handler as POST }
