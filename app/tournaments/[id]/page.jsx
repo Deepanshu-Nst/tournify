@@ -164,6 +164,8 @@ export default function TournamentDetailPage({ params }) {
     { round: "Finals", date: tournament.endDate || tournament.startDate, time: "19:00 GMT" },
   ]
 
+  const isRegistrationFull = tournament.registeredTeams >= tournament.totalSlots
+
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
@@ -396,11 +398,19 @@ export default function TournamentDetailPage({ params }) {
                     </div>
 
                     <div className="w-full">
-                      <TournamentRegistrationForm
-                        tournamentId={params.id}
-                        registrationType={tournament.registrationType}
-                        tournamentName={tournament.title}
-                      />
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between text-sm text-muted-foreground">
+                          <span>Entry Type</span>
+                          <span className="capitalize">{tournament.registrationMode || "team"}</span>
+                        </div>
+                        <TournamentRegistrationForm
+                          tournamentId={params.id}
+                          registrationType={tournament.registrationType}
+                          tournamentName={tournament.title}
+                          registrationMode={tournament.registrationMode}
+                          isRegistrationFull={isRegistrationFull}
+                        />
+                      </div>
                     </div>
                   </CardContent>
                 </Card>

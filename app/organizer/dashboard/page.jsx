@@ -11,7 +11,7 @@ import { OrganizerSidebar } from "@/components/organizer-sidebar"
 import Link from "next/link"
 import { Plus } from "lucide-react"
 import { useAuth } from "@/lib/auth"
-import { getOrganizerTournaments, getTournamentRegistrations } from "@/lib/tournament-service"
+import { getOrganizerTournaments, getTournamentRegistrations, updateRegistrationStatus } from "@/lib/tournament-service"
 import { useToast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -28,6 +28,7 @@ export default function OrganizerDashboardPage() {
     tournaments: [],
     registrations: [],
   })
+  const [processingRegistration, setProcessingRegistration] = useState(null)
 
   useEffect(() => {
     // Redirect if not logged in
@@ -93,6 +94,36 @@ export default function OrganizerDashboardPage() {
   const pendingRegistrations = useMemo(() => {
     return dashboardData.registrations.filter((reg) => reg.status === "pending")
   }, [dashboardData.registrations])
+
+  const handlePendingAction = async (registrationId, status) => {
+    try {
+      setProcessingRegistration(`${registrationId}-${status}`)
+      await updateRegistrationStatus(registrationId, status)
+
+      setDashboardData((prev) => {
+        const registrations = prev.registrations.map((reg) =>
+          reg.id === registrationId ? { ...reg, status } : reg,
+        )
+        const pendingApprovals = registrations.filter((reg) => reg.status === "pending").length
+        const activeParticipants = registrations.filter((reg) => reg.status === "approved").length
+        return { ...prev, registrations, pendingApprovals, activeParticipants }
+      })
+
+      toast({
+        title: `Registration ${status === "approved" ? "approved" : "rejected"}`,
+        description: `Registration has been ${status}.`,
+      })
+    } catch (error) {
+      console.error("Update registration error:", error)
+      toast({
+        title: "Error",
+        description: "Failed to update registration status. Please try again.",
+        variant: "destructive",
+      })
+    } finally {
+      setProcessingRegistration(null)
+    }
+  }
 
   // Loading skeleton for the dashboard
   if (authLoading || isLoading) {
@@ -226,13 +257,30 @@ export default function OrganizerDashboardPage() {
                                   </p>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                  <Button variant="outline" size="sm">
+                                  <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() =>
+                                      router.push(`/organizer/tournaments/${registration.tournamentId}`)
+                                    }
+                                  >
                                     View Details
                                   </Button>
-                                  <Button variant="destructive" size="sm">
-                                    Reject
+                                  <Button
+                                    variant="destructive"
+                                    size="sm"
+                                    disabled={processingRegistration === `${registration.id}-rejected`}
+                                    onClick={() => handlePendingAction(registration.id, "rejected")}
+                                  >
+                                    {processingRegistration === `${registration.id}-rejected` ? "..." : "Reject"}
                                   </Button>
-                                  <Button size="sm">Approve</Button>
+                                  <Button
+                                    size="sm"
+                                    disabled={processingRegistration === `${registration.id}-approved`}
+                                    onClick={() => handlePendingAction(registration.id, "approved")}
+                                  >
+                                    {processingRegistration === `${registration.id}-approved` ? "..." : "Approve"}
+                                  </Button>
                                 </div>
                               </div>
                             ))}

@@ -39,6 +39,7 @@ export default function CreateTournamentPage() {
     prizePool: "",
     registrationType: "",
     venue: "",
+    registrationMode: "team",
   })
 
   // Redirect if not logged in
@@ -115,7 +116,7 @@ export default function CreateTournamentPage() {
           const imageUrl = await uploadTournamentImage(bannerImage)
 
           // Update tournament with image URL
-          await updateTournament(tournament.id, { image: imageUrl })
+          await updateTournament(tournament.id, { image: imageUrl }, user.id)
         } catch (imageError) {
           console.error("Error uploading image:", imageError)
           // Continue without image if upload fails
@@ -337,6 +338,24 @@ export default function CreateTournamentPage() {
                           <SelectItem value="Free">Free Entry</SelectItem>
                           <SelectItem value="Paid">Paid Entry</SelectItem>
                           <SelectItem value="Invite">Invite Only</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="space-y-2">
+                      <Label htmlFor="registrationMode">Entry Type</Label>
+                      <Select
+                        onValueChange={(value) => handleSelectChange("registrationMode", value)}
+                        value={formData.registrationMode}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select entry type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="team">Team Based</SelectItem>
+                          <SelectItem value="solo">Solo / Individual</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>

@@ -73,7 +73,7 @@ export function OrganizerTournamentList() {
     if (!tournamentToDelete) return
 
     try {
-      await deleteTournament(tournamentToDelete.id)
+      await deleteTournament(tournamentToDelete.id, user.id)
       setTournaments(tournaments.filter((t) => t.id !== tournamentToDelete.id))
       toast({
         title: "Tournament deleted",

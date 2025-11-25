@@ -40,6 +40,7 @@ export default function EditTournamentPage({ params }) {
     registrationType: "",
     venue: "",
     image: "",
+    registrationMode: "team",
   })
 
   useEffect(() => {
@@ -75,6 +76,7 @@ export default function EditTournamentPage({ params }) {
           registrationType: tournament.registrationType || "",
           venue: tournament.venue || "",
           image: tournament.image || "",
+          registrationMode: tournament.registrationMode || "team",
         })
 
         // Set dates
@@ -170,7 +172,7 @@ export default function EditTournamentPage({ params }) {
       }
 
       // Update tournament
-      await updateTournament(params.id, tournamentData)
+      await updateTournament(params.id, tournamentData, user.id)
 
       toast({
         title: "Tournament Updated",
@@ -384,6 +386,21 @@ export default function EditTournamentPage({ params }) {
                           <SelectItem value="Free">Free Entry</SelectItem>
                           <SelectItem value="Paid">Paid Entry</SelectItem>
                           <SelectItem value="Invite">Invite Only</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="registrationMode">Entry Type</Label>
+                      <Select
+                        onValueChange={(value) => handleSelectChange("registrationMode", value)}
+                        value={formData.registrationMode}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select entry type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="team">Team Based</SelectItem>
+                          <SelectItem value="solo">Solo / Individual</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>

@@ -34,6 +34,9 @@ export async function POST(request) {
         image: data.image ?? null,
         organizerId: data.organizerId,
         organizerName: data.organizerName ?? null,
+        venue: data.venue ?? null,
+        rules: data.rules ?? null,
+        registrationMode: data.registrationMode ?? "team",
       },
       select: {
         id: true,

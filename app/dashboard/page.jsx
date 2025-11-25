@@ -30,7 +30,7 @@ export default function ParticipantDashboardPage() {
       }
 
       try {
-        const data = await getUserRegistrationsWithDetails(user.uid)
+        const data = await getUserRegistrationsWithDetails(user.id)
         setRegistrations(data)
       } catch (error) {
         console.error("Error fetching registrations:", error)

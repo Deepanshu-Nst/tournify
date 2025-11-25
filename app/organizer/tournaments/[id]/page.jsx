@@ -119,7 +119,7 @@ export default function TournamentManagementPage({ params }) {
   const handleDelete = async () => {
     setIsDeleting(true)
     try {
-      await deleteTournament(params.id)
+      await deleteTournament(params.id, user.id)
       toast({
         title: "Tournament deleted",
         description: "The tournament has been deleted successfully.",

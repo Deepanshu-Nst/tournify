@@ -76,10 +76,35 @@ model Tournament {
   image            String?
   organizerId      String   @db.ObjectId
   organizerName    String?
+  venue            String?
+  rules            String?
+  registrationMode String   @default("team")
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 
   organizer User   @relation(fields: [organizerId], references: [id], name: "UserTournaments", onDelete: Cascade)
+  registrations Registration[] @relation("TournamentRegistrations")
+}
+
+model Registration {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  tournamentId   String   @db.ObjectId
+  userId         String   @db.ObjectId
+  userName       String?
+  userEmail      String?
+  teamName       String?
+  mode           String
+  contactEmail   String
+  contactPhone   String?
+  discordHandle  String?
+  additionalInfo String?
+  playerCount    Int
+  players        Json
+  status         String   @default("pending")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  tournament Tournament @relation("TournamentRegistrations", fields: [tournamentId], references: [id], onDelete: Cascade)
 }
 
 

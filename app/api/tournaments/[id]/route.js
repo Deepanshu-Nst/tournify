@@ -13,10 +13,15 @@ export async function GET(_req, { params }) {
 
 export async function PATCH(request, { params }) {
   try {
+    const payload = await request.json()
     const existing = await prisma.tournament.findUnique({ where: { id: params.id } })
     if (!existing) return new Response(JSON.stringify({ error: "Not found" }), { status: 404 })
 
-    const data = await request.json()
+    if (payload.organizerId && payload.organizerId !== existing.organizerId) {
+      return new Response(JSON.stringify({ error: "Forbidden" }), { status: 403 })
+    }
+
+    const { organizerId, ...data } = payload
     const updated = await prisma.tournament.update({ where: { id: params.id }, data })
     return new Response(JSON.stringify({ tournament: updated }), { status: 200 })
   } catch (error) {
@@ -25,10 +30,16 @@ export async function PATCH(request, { params }) {
   }
 }
 
-export async function DELETE(_req, { params }) {
+export async function DELETE(request, { params }) {
   try {
+    const payload = await request.json().catch(() => ({}))
     const existing = await prisma.tournament.findUnique({ where: { id: params.id } })
     if (!existing) return new Response(JSON.stringify({ error: "Not found" }), { status: 404 })
+
+    if (payload.organizerId && payload.organizerId !== existing.organizerId) {
+      return new Response(JSON.stringify({ error: "Forbidden" }), { status: 403 })
+    }
+
     await prisma.tournament.delete({ where: { id: params.id } })
     return new Response(null, { status: 204 })
   } catch (error) {

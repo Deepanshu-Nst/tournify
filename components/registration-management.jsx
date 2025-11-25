@@ -121,13 +121,18 @@ export function RegistrationManagement({ tournamentId }) {
                     >
                       <div>
                         <div className="flex items-center gap-2">
-                          <h3 className="font-medium">{registration.teamName}</h3>
+                          <h3 className="font-medium">{registration.teamName || registration.userName}</h3>
                           {getStatusBadge(registration.status)}
                         </div>
-                        <p className="text-sm text-muted-foreground">Team Size: {registration.teamSize} players</p>
-                        <p className="text-sm text-muted-foreground">Contact: {registration.contactEmail}</p>
+                        <p className="text-sm text-muted-foreground capitalize">
+                          Mode: {registration.mode || "team"}
+                        </p>
                         <p className="text-sm text-muted-foreground">
-                          Submitted: {new Date(registration.createdAt?.toDate()).toLocaleDateString()}
+                          Players: {registration.playerCount} • Contact: {registration.contactEmail}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          Submitted:{" "}
+                          {registration.createdAt ? new Date(registration.createdAt).toLocaleString() : "N/A"}
                         </p>
                       </div>
                       <div className="flex items-center gap-2">
@@ -172,11 +177,13 @@ export function RegistrationManagement({ tournamentId }) {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium">Team Name</p>
-                  <p className="text-sm text-muted-foreground">{selectedRegistration.teamName}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {selectedRegistration.teamName || selectedRegistration.userName}
+                  </p>
                 </div>
                 <div>
                   <p className="text-sm font-medium">Team Size</p>
-                  <p className="text-sm text-muted-foreground">{selectedRegistration.teamSize} players</p>
+                  <p className="text-sm text-muted-foreground">{selectedRegistration.playerCount} players</p>
                 </div>
                 <div>
                   <p className="text-sm font-medium">Contact Email</p>
@@ -186,9 +193,28 @@ export function RegistrationManagement({ tournamentId }) {
                   <p className="text-sm font-medium">Contact Phone</p>
                   <p className="text-sm text-muted-foreground">{selectedRegistration.contactPhone}</p>
                 </div>
+                <div>
+                  <p className="text-sm font-medium">Discord</p>
+                  <p className="text-sm text-muted-foreground">{selectedRegistration.discordHandle || "—"}</p>
+                </div>
                 <div className="col-span-2">
                   <p className="text-sm font-medium">Status</p>
                   <p className="text-sm">{getStatusBadge(selectedRegistration.status)}</p>
+                </div>
+                <div className="col-span-2">
+                  <p className="text-sm font-medium">Players</p>
+                  {Array.isArray(selectedRegistration.players) && selectedRegistration.players.length > 0 ? (
+                    <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
+                      {selectedRegistration.players.map((player, idx) => (
+                        <li key={idx}>
+                          <span className="font-medium">{player.fullName || player.ign}</span>
+                          {player.ign ? ` (${player.ign})` : ""} {player.role ? `- ${player.role}` : ""}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="text-sm text-muted-foreground">No player details provided.</p>
+                  )}
                 </div>
                 <div className="col-span-2">
                   <p className="text-sm font-medium">Additional Information</p>
