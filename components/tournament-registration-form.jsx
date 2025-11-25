@@ -1,23 +1,16 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { createPortal } from "react-dom"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
 import { useToast } from "@/hooks/use-toast"
 import { useAuth } from "@/lib/auth"
 import { registerForTournament } from "@/lib/tournament-service"
 import { useRouter } from "next/navigation"
-import { Loader2, Plus, Minus } from "lucide-react"
+import { Loader2, Plus, Minus, X } from "lucide-react"
 
 const MAX_TEAM_PLAYERS = 6
 
@@ -33,6 +26,7 @@ export default function TournamentRegistrationForm({
   const router = useRouter()
   const [isRegistering, setIsRegistering] = useState(false)
   const [showDialog, setShowDialog] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
   const isTeamMode = registrationMode !== "solo"
   const [formData, setFormData] = useState({
     teamName: "",
@@ -74,6 +68,10 @@ export default function TournamentRegistrationForm({
   }
 
   useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  useEffect(() => {
     if (user) {
       setFormData((prev) => ({
         ...prev,
@@ -92,6 +90,14 @@ export default function TournamentRegistrationForm({
       )
     }
   }, [user])
+
+  useEffect(() => {
+    if (!isMounted) return
+    document.body.style.overflow = showDialog ? "hidden" : ""
+    return () => {
+      document.body.style.overflow = ""
+    }
+  }, [showDialog, isMounted])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -183,18 +189,30 @@ export default function TournamentRegistrationForm({
         {isRegistrationFull ? "Registration Closed" : `Register Now ${isPaid ? "(Paid)" : ""}`}
       </Button>
 
-      <Dialog open={showDialog} onOpenChange={setShowDialog}>
-        <DialogContent className="sm:max-w-[500px]">
-          <DialogHeader>
-            <DialogTitle>Tournament Registration</DialogTitle>
-            <DialogDescription>
-              {isPaid
-                ? `Fill out the form below to register for ${tournamentName}. Payment will be required to complete registration.`
-                : `Fill out the form below to register for ${tournamentName}.`}
-            </DialogDescription>
-          </DialogHeader>
+      {isMounted &&
+        showDialog &&
+        createPortal(
+          <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 px-4 py-6">
+            <div className="relative w-full max-w-xl rounded-lg bg-background p-6 shadow-xl">
+              <button
+                type="button"
+                className="absolute right-4 top-4 text-muted-foreground transition hover:text-foreground"
+                onClick={() => setShowDialog(false)}
+              >
+                <X className="h-4 w-4" />
+                <span className="sr-only">Close</span>
+              </button>
 
-          <form onSubmit={handleSubmit} className="space-y-4 py-4">
+              <div className="space-y-1 pb-4 pr-6">
+                <h2 className="text-xl font-semibold">Tournament Registration</h2>
+                <p className="text-sm text-muted-foreground">
+                  {isPaid
+                    ? `Fill out the form below to register for ${tournamentName}. Payment will be required to complete registration.`
+                    : `Fill out the form below to register for ${tournamentName}.`}
+                </p>
+              </div>
+
+              <form onSubmit={handleSubmit} className="space-y-4">
             {isTeamMode && (
               <div className="grid w-full gap-1.5">
                 <Label htmlFor="teamName">Team Name</Label>
@@ -296,25 +314,32 @@ export default function TournamentRegistrationForm({
               />
             </div>
 
-            <DialogFooter>
-              <Button variant="outline" type="button" onClick={() => setShowDialog(false)}>
-                Cancel
-              </Button>
-
-              <Button type="submit" disabled={isRegistering}>
-                {isRegistering ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Registering...
-                  </>
-                ) : (
-                  "Submit Registration"
-                )}
-              </Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
+                <div className="flex flex-col gap-2 pt-2 sm:flex-row sm:justify-end">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => {
+                      setShowDialog(false)
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                  <Button type="submit" disabled={isRegistering}>
+                    {isRegistering ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Registering...
+                      </>
+                    ) : (
+                      "Submit Registration"
+                    )}
+                  </Button>
+                </div>
+              </form>
+            </div>
+          </div>,
+          document.body,
+        )}
     </>
   )
 }
