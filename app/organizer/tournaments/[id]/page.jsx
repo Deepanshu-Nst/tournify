@@ -34,7 +34,7 @@ export default function TournamentManagementPage({ params }) {
   const [isDeleting, setIsDeleting] = useState(false)
   const { toast } = useToast()
   const router = useRouter()
-  const { user } = useAuth()
+  const { user, token } = useAuth()
 
   const fetchTournament = async () => {
     if (!user) {
@@ -49,7 +49,7 @@ export default function TournamentManagementPage({ params }) {
       const data = await getTournamentById(params.id)
 
       // Check if user is the organizer
-      if (data.organizerId !== user.uid) {
+      if (data.organizerId !== user.id) {
         toast({
           title: "Unauthorized",
           description: "You don't have permission to manage this tournament.",
@@ -119,7 +119,7 @@ export default function TournamentManagementPage({ params }) {
   const handleDelete = async () => {
     setIsDeleting(true)
     try {
-      await deleteTournament(params.id)
+      await deleteTournament(params.id, token)
       toast({
         title: "Tournament deleted",
         description: "The tournament has been deleted successfully.",

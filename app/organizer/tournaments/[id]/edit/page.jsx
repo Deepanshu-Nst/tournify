@@ -23,7 +23,7 @@ import ImageUpload from "@/components/image-upload"
 export default function EditTournamentPage({ params }) {
   const { toast } = useToast()
   const router = useRouter()
-  const { user } = useAuth()
+  const { user, token } = useAuth()
   const [loading, setLoading] = useState(false)
   const [isLoadingTournament, setIsLoadingTournament] = useState(true)
   const [startDate, setStartDate] = useState()
@@ -53,7 +53,7 @@ export default function EditTournamentPage({ params }) {
         const tournament = await getTournamentById(params.id)
 
         // Check if user is the organizer
-        if (tournament.organizerId !== user.uid) {
+        if (tournament.organizerId !== user.id) {
           toast({
             title: "Unauthorized",
             description: "You don't have permission to edit this tournament.",
@@ -170,7 +170,7 @@ export default function EditTournamentPage({ params }) {
       }
 
       // Update tournament
-      await updateTournament(params.id, tournamentData)
+      await updateTournament(params.id, tournamentData, token)
 
       toast({
         title: "Tournament Updated",

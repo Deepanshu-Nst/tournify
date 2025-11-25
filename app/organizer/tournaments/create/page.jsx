@@ -24,7 +24,7 @@ import ImageUpload from "@/components/image-upload"
 export default function CreateTournamentPage() {
   const { toast } = useToast()
   const router = useRouter()
-  const { user, isLoading } = useAuth()
+  const { user, isLoading, token } = useAuth()
   const [loading, setLoading] = useState(false)
   const [startDate, setStartDate] = useState()
   const [endDate, setEndDate] = useState()
@@ -106,7 +106,7 @@ export default function CreateTournamentPage() {
       }
 
       // Create tournament
-      const tournament = await createTournament(tournamentData, user.id)
+      const tournament = await createTournament(tournamentData, token)
 
       // Upload banner image if provided
       if (bannerImage) {
@@ -114,7 +114,7 @@ export default function CreateTournamentPage() {
           const imageUrl = await uploadTournamentImage(bannerImage)
 
           // Update tournament with image URL
-          await updateTournament(tournament.id, { image: imageUrl })
+          await updateTournament(tournament.id, { image: imageUrl }, token)
         } catch (imageError) {
           console.error("Error uploading image:", imageError)
           // Continue without image if upload fails
