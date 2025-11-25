@@ -77,17 +77,12 @@ export default function SignupPage() {
     } catch (error) {
       console.error("Signup error:", error)
 
-      let errorMessage = "There was an error creating your account."
+      let errorMessage = error.message || "There was an error creating your account."
 
-      if (error.code === "auth/email-already-in-use") {
+      if (error.code === 409 || errorMessage.includes("already in use")) {
         errorMessage = "This email is already in use. Please try logging in instead."
-      } else if (error.code === "auth/invalid-email") {
+      } else if (errorMessage.includes("email")) {
         errorMessage = "The email address is not valid."
-      } else if (error.code === "auth/weak-password") {
-        errorMessage = "The password is too weak. Please use a stronger password."
-      } else if (error.code === "auth/configuration-not-found") {
-        errorMessage = "Authentication is not properly configured. Please contact support."
-        setConfigError(true)
       }
 
       toast({

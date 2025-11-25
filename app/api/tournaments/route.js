@@ -1,6 +1,5 @@
 import prisma from "@/lib/prisma"
-import { getServerSession } from "next-auth"
-import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+import { getUserFromRequest } from "@/lib/jwt"
 
 export async function GET() {
   try {
@@ -14,8 +13,8 @@ export async function GET() {
 
 export async function POST(request) {
   try {
-    const session = await getServerSession(authOptions)
-    if (!session?.user?.id) {
+    const user = await getUserFromRequest(request)
+    if (!user?.id) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 })
     }
 
@@ -35,8 +34,8 @@ export async function POST(request) {
         prizePool: data.prizePool ?? null,
         registrationType: data.registrationType ?? null,
         image: data.image ?? null,
-        organizerId: session.user.id,
-        organizerName: data.organizerName ?? session.user.name ?? null,
+        organizerId: user.id,
+        organizerName: data.organizerName ?? user.name ?? null,
       },
       select: {
         id: true,

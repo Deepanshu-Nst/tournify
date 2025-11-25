@@ -5,7 +5,7 @@ import { generateToken } from "@/lib/jwt"
 export async function POST(request) {
   try {
     const body = await request.json()
-    const { name, email, password } = body || {}
+    const { email, password } = body || {}
 
     if (!email || !password) {
       return new Response(JSON.stringify({ error: "Email and password are required" }), {
@@ -14,20 +14,30 @@ export async function POST(request) {
       })
     }
 
-    const existing = await prisma.user.findUnique({ where: { email } })
-    if (existing) {
-      return new Response(JSON.stringify({ error: "Email already in use" }), {
-        status: 409,
+    // Find user by email
+    const user = await prisma.user.findUnique({ where: { email } })
+    if (!user) {
+      return new Response(JSON.stringify({ error: "Invalid email or password" }), {
+        status: 401,
         headers: { "Content-Type": "application/json" },
       })
     }
 
-    const passwordHash = await bcrypt.hash(password, 12)
+    // Verify password
+    if (!user.passwordHash) {
+      return new Response(JSON.stringify({ error: "Invalid email or password" }), {
+        status: 401,
+        headers: { "Content-Type": "application/json" },
+      })
+    }
 
-    const user = await prisma.user.create({
-      data: { name: name || null, email, passwordHash },
-      select: { id: true, name: true, email: true, image: true, createdAt: true },
-    })
+    const valid = await bcrypt.compare(password, user.passwordHash)
+    if (!valid) {
+      return new Response(JSON.stringify({ error: "Invalid email or password" }), {
+        status: 401,
+        headers: { "Content-Type": "application/json" },
+      })
+    }
 
     // Generate JWT token
     const token = generateToken({
@@ -40,24 +50,29 @@ export async function POST(request) {
     // Return user data and token
     return new Response(
       JSON.stringify({
-        user,
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          image: user.image,
+          createdAt: user.createdAt,
+        },
         token,
       }),
       {
-        status: 201,
+        status: 200,
         headers: { "Content-Type": "application/json" },
       }
     )
   } catch (error) {
-    console.error("Signup API error", error)
+    console.error("Login API error", error)
     const errorMessage = process.env.NODE_ENV === "development" 
       ? error.message || "Internal server error"
       : "Internal server error"
-    return new Response(JSON.stringify({ error: errorMessage, details: process.env.NODE_ENV === "development" ? error.stack : undefined }), {
+    return new Response(JSON.stringify({ error: errorMessage }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     })
   }
 }
-
 

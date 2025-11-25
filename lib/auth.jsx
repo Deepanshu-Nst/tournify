@@ -1,7 +1,6 @@
 "use client"
 
-import { createContext, useContext, useMemo } from "react"
-import { signIn as nextAuthSignIn, signOut as nextAuthSignOut, useSession, signIn } from "next-auth/react"
+import { createContext, useContext, useMemo, useState, useEffect } from "react"
 
 const AuthContext = createContext({
   user: null,
@@ -9,24 +8,89 @@ const AuthContext = createContext({
   signIn: async () => {},
   signUp: async () => {},
   signOut: async () => {},
-  signInWithGoogle: async () => {},
+  token: null,
   isFirebaseInitialized: true,
   isOnline: true,
 })
 
 export const useAuth = () => useContext(AuthContext)
 
-export const AuthProvider = ({ children }) => {
-  const { data: session, status } = useSession()
+// Helper to get token from localStorage
+const getStoredToken = () => {
+  if (typeof window === "undefined") return null
+  return localStorage.getItem("token")
+}
 
-  const signInWithCredentials = async (email, password) => {
-    const res = await nextAuthSignIn("credentials", {
-      redirect: false,
-      email,
-      password,
+// Helper to store token in localStorage
+const setStoredToken = (token) => {
+  if (typeof window === "undefined") return
+  if (token) {
+    localStorage.setItem("token", token)
+  } else {
+    localStorage.removeItem("token")
+  }
+}
+
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null)
+  const [token, setToken] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+
+  // Load user from token on mount
+  useEffect(() => {
+    const loadUser = async () => {
+      const storedToken = getStoredToken()
+      if (!storedToken) {
+        setIsLoading(false)
+        return
+      }
+
+      setToken(storedToken)
+      try {
+        const resp = await fetch("/api/auth/me", {
+          headers: {
+            Authorization: `Bearer ${storedToken}`,
+          },
+        })
+        if (resp.ok) {
+          const data = await resp.json()
+          setUser(data.user)
+        } else {
+          // Token is invalid, remove it
+          setStoredToken(null)
+          setToken(null)
+        }
+      } catch (error) {
+        console.error("Error loading user:", error)
+        setStoredToken(null)
+        setToken(null)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    loadUser()
+  }, [])
+
+  const signIn = async (email, password) => {
+    const resp = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
     })
-    if (res?.error) throw new Error(res.error)
-    return res
+    const data = await resp.json()
+    if (!resp.ok) {
+      const message = data?.error || "Login failed"
+      const err = new Error(message)
+      err.code = resp.status
+      throw err
+    }
+
+    // Store token and user
+    setStoredToken(data.token)
+    setToken(data.token)
+    setUser(data.user)
+    return data
   }
 
   const signUp = async (email, password, displayName) => {
@@ -42,31 +106,32 @@ export const AuthProvider = ({ children }) => {
       err.code = resp.status
       throw err
     }
-    // auto sign-in after signup
-    await signInWithCredentials(email, password)
+
+    // Store token and user
+    setStoredToken(data.token)
+    setToken(data.token)
+    setUser(data.user)
     return data
   }
 
   const signOut = async () => {
-    await nextAuthSignOut({ redirect: false })
-  }
-
-  const signInWithGoogle = async () => {
-    await signIn("google")
+    setStoredToken(null)
+    setToken(null)
+    setUser(null)
   }
 
   const contextValue = useMemo(
     () => ({
-      user: session?.user || null,
-      isLoading: status === "loading",
-      signIn: signInWithCredentials,
+      user,
+      isLoading,
+      signIn,
       signUp,
       signOut,
-      signInWithGoogle,
+      token,
       isFirebaseInitialized: true,
       isOnline: true,
     }),
-    [session?.user, status],
+    [user, isLoading, token],
   )
 
   return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>

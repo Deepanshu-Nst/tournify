@@ -66,17 +66,12 @@ export default function LoginPage() {
     } catch (error) {
       console.error("Login error:", error)
 
-      let errorMessage = "Invalid email or password."
+      let errorMessage = error.message || "Invalid email or password."
 
-      if (error.code === "auth/user-not-found") {
+      if (errorMessage.includes("not found") || errorMessage.includes("No account")) {
         errorMessage = "No account found with this email. Please sign up first."
-      } else if (error.code === "auth/wrong-password") {
-        errorMessage = "Incorrect password. Please try again."
-      } else if (error.code === "auth/invalid-email") {
-        errorMessage = "The email address is not valid."
-      } else if (error.code === "auth/configuration-not-found") {
-        errorMessage = "Authentication is not properly configured. Please contact support."
-        setConfigError(true)
+      } else if (errorMessage.includes("password") || errorMessage.includes("Invalid")) {
+        errorMessage = "Invalid email or password. Please try again."
       }
 
       toast({
