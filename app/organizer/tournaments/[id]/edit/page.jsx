@@ -23,7 +23,7 @@ import ImageUpload from "@/components/image-upload"
 export default function EditTournamentPage({ params }) {
   const { toast } = useToast()
   const router = useRouter()
-  const { user, token } = useAuth()
+  const { user } = useAuth()
   const [loading, setLoading] = useState(false)
   const [isLoadingTournament, setIsLoadingTournament] = useState(true)
   const [startDate, setStartDate] = useState()
@@ -170,7 +170,7 @@ export default function EditTournamentPage({ params }) {
       }
 
       // Update tournament
-      await updateTournament(params.id, tournamentData, token)
+      await updateTournament(params.id, tournamentData)
 
       toast({
         title: "Tournament Updated",

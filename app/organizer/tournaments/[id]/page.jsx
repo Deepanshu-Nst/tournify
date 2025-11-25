@@ -34,7 +34,7 @@ export default function TournamentManagementPage({ params }) {
   const [isDeleting, setIsDeleting] = useState(false)
   const { toast } = useToast()
   const router = useRouter()
-  const { user, token } = useAuth()
+  const { user } = useAuth()
 
   const fetchTournament = async () => {
     if (!user) {
@@ -119,7 +119,7 @@ export default function TournamentManagementPage({ params }) {
   const handleDelete = async () => {
     setIsDeleting(true)
     try {
-      await deleteTournament(params.id, token)
+      await deleteTournament(params.id)
       toast({
         title: "Tournament deleted",
         description: "The tournament has been deleted successfully.",

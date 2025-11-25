@@ -26,7 +26,7 @@ export function OrganizerTournamentList() {
   const [isLoading, setIsLoading] = useState(true)
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
   const [tournamentToDelete, setTournamentToDelete] = useState(null)
-  const { user, token } = useAuth()
+  const { user } = useAuth()
   const { toast } = useToast()
 
   useEffect(() => {
@@ -73,7 +73,7 @@ export function OrganizerTournamentList() {
     if (!tournamentToDelete) return
 
     try {
-      await deleteTournament(tournamentToDelete.id, token)
+      await deleteTournament(tournamentToDelete.id)
       setTournaments(tournaments.filter((t) => t.id !== tournamentToDelete.id))
       toast({
         title: "Tournament deleted",

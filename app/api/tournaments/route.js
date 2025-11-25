@@ -1,6 +1,5 @@
 import prisma from "@/lib/prisma"
-import { getUserFromRequest } from "@/lib/jwt"
-
+   
 export async function GET() {
   try {
     const tournaments = await prisma.tournament.findMany({ orderBy: { createdAt: "desc" } })
@@ -13,13 +12,12 @@ export async function GET() {
 
 export async function POST(request) {
   try {
-    const user = await getUserFromRequest(request)
-    if (!user?.id) {
-      return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 })
-    }
-
     const body = await request.json()
     const data = body || {}
+
+    if (!data.organizerId) {
+      return new Response(JSON.stringify({ error: "Organizer ID is required" }), { status: 400 })
+    }
 
     const created = await prisma.tournament.create({
       data: {
@@ -34,8 +32,8 @@ export async function POST(request) {
         prizePool: data.prizePool ?? null,
         registrationType: data.registrationType ?? null,
         image: data.image ?? null,
-        organizerId: user.id,
-        organizerName: data.organizerName ?? user.name ?? null,
+        organizerId: data.organizerId,
+        organizerName: data.organizerName ?? null,
       },
       select: {
         id: true,
