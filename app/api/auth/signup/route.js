@@ -50,12 +50,29 @@ export async function POST(request) {
     )
   } catch (error) {
     console.error("Signup API error", error)
-    const errorMessage = process.env.NODE_ENV === "development" 
-      ? error.message || "Internal server error"
-      : "Internal server error"
-    return new Response(JSON.stringify({ error: errorMessage, details: process.env.NODE_ENV === "development" ? error.stack : undefined }), {
+    
+    // Ensure we always return JSON, even on unexpected errors
+    let errorMessage = "Internal server error"
+    if (process.env.NODE_ENV === "development") {
+      errorMessage = error.message || error.toString() || "Internal server error"
+    }
+    
+    // Handle Prisma connection errors specifically
+    if (error.message?.includes("Can't reach database") || 
+        error.message?.includes("P1001") ||
+        error.message?.includes("ECONNREFUSED")) {
+      errorMessage = "Database connection failed. Please try again later."
+    }
+    
+    return new Response(JSON.stringify({ 
+      error: errorMessage,
+      ...(process.env.NODE_ENV === "development" && { details: error.stack })
+    }), {
       status: 500,
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        "Cache-Control": "no-cache"
+      },
     })
   }
 }

@@ -78,7 +78,22 @@ export const AuthProvider = ({ children }) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     })
-    const data = await resp.json()
+    
+    // Check if response is JSON before parsing
+    const contentType = resp.headers.get("content-type")
+    let data
+    try {
+      if (contentType && contentType.includes("application/json")) {
+        data = await resp.json()
+      } else {
+        const text = await resp.text()
+        throw new Error(`Server returned non-JSON response: ${text.substring(0, 100)}`)
+      }
+    } catch (parseError) {
+      console.error("Error parsing response:", parseError)
+      throw new Error("Invalid response from server. Please try again.")
+    }
+    
     if (!resp.ok) {
       const message = data?.error || "Login failed"
       const err = new Error(message)
@@ -99,7 +114,22 @@ export const AuthProvider = ({ children }) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: displayName, email, password }),
     })
-    const data = await resp.json()
+    
+    // Check if response is JSON before parsing
+    const contentType = resp.headers.get("content-type")
+    let data
+    try {
+      if (contentType && contentType.includes("application/json")) {
+        data = await resp.json()
+      } else {
+        const text = await resp.text()
+        throw new Error(`Server returned non-JSON response: ${text.substring(0, 100)}`)
+      }
+    } catch (parseError) {
+      console.error("Error parsing response:", parseError)
+      throw new Error("Invalid response from server. Please try again.")
+    }
+    
     if (!resp.ok) {
       const message = data?.error || "Signup failed"
       const err = new Error(message)
